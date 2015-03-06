@@ -11,8 +11,8 @@ import string
 import time
 
 #prompts
-PROMPT = "brocade> "
-ENABLED_PROMPT = "brocade# "
+PROMPT = "brocade@FWS624>"
+ENABLED_PROMPT = "brocade@FW624#"
 
 #format is ('username','password'):privilege
 un_pass_config = {
@@ -267,7 +267,7 @@ ip ssh idle-time 10
 end
 """ %(unlist))
          elif From_upper == 'ENABLE':
-            self.SOCKET.send("Username: ")
+            self.SOCKET.send("User Name: ")
             un = self.SOCKET.recv(1024)
             if un.upper() == "LOGOUT": break
             print("    Username: %s" %(un.strip()))
@@ -278,7 +278,7 @@ end
             if (un.strip(),pas.strip()) in un_pass_config or (un.strip(),pas.strip()) in un_pass_running_config:
                self.enabled = True
             else:
-               self.SOCKET.send("Error - incorrect password.")
+               self.SOCKET.send("Error - Incorrect username or password.")
          elif From_upper == '?':
                self.SOCKET.send("""  enable            Enter Privileged mode
   ping              Ping IP node
@@ -341,7 +341,7 @@ while True:
         s.bind(('', 23))
         break
     except socket.error:
-        print("[e] Address in use, sleeping 30sec then trying again")
+        print("[e] Address in use or permission error, sleeping 30sec then trying again")
         time.sleep(30)
 s.listen(4)
 vector = []
