@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 #code base from http://homepages.ius.edu/jfdoyle/B438/HTML/chatserver4chatserver5Python.htm
-#this is a brocade emulator for testing against the Metasploit moduels for brocade, 
+#this is a brocade emulator for testing against the Metasploit modules for brocade,
 #based on the switch I own.  We've only emulated a few functions (?, show config, enable) and kept some
-#features out like tab complete, ? on commands, just o keep this code fairly simple.
+#features out like tab complete, ? on commands, just to keep this code fairly simple.
 #we've also forged in a 'switchversion' command, which will dynamically switch from 7.2 emulation to 7.4 emulation.
 
 import socket, threading
