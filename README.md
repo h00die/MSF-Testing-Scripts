@@ -15,10 +15,13 @@ Metasploit Module: [exploit/multi/http/werkzeug_debug_rce](https://www.rapid7.co
 Metasploit Module: [post/multi/escalate/allwinner_backdoor](https://www.rapid7.com/db/modules/post/multi/escalate/allwinner_backdoor)
 
 ## ipfire-2.15.i586-full-core82.iso
-Metasploit Module: []()
+Metasploit Module: [exploit/linux/http/ipfire_bashbug_exec](https://www.rapid7.com/db/modules/exploit/linux/http/ipfire_bashbug_exec)
 
 ## ipfire-2.19.x86_64-full-core100.iso
-Metasploit Module: []()
+Metasploit Module: [exploit/linux/http/ipfire_proxy_exec](https://www.rapid7.com/db/modules/exploit/linux/http/ipfire_proxy_exec)
 
 ## op5-monitor-7.1.9-20160303.tar.gz
+Metasploit Module: []()
+
+## centreon-2.5.3.tar.gz
 Metasploit Module: []()
