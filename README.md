@@ -21,7 +21,16 @@ Metasploit Module: [exploit/linux/http/ipfire_bashbug_exec](https://www.rapid7.c
 Metasploit Module: [exploit/linux/http/ipfire_proxy_exec](https://www.rapid7.com/db/modules/exploit/linux/http/ipfire_proxy_exec)
 
 ## op5-monitor-7.1.9-20160303.tar.gz
-Metasploit Module: []()
+Metasploit Module: [exploit/linux/http/op5_config_exec](https://www.rapid7.com/db/modules/exploit/linux/http/op5_config_exec)
 
 ## centreon-2.5.3.tar.gz
+Metasploit Module: []()
+
+## tiki-14.1.tar.gz
+Metasploit Module: [exploit/linux/http/tiki_calendar_exec](https://www.rapid7/db/modules/exploit/linux/http/tiki_calendar_exec)
+
+## WNR2000v3_V1.1.2.10.zip
+Metasploit Module: [auxiliary/admin/http/netgear_soap_password_extractor](https://www.rapid7.com/db/modules/auxiliary/admin/http/netgear_soap_password_extractor)
+
+## netis_backdoor.py
 Metasploit Module: []()
