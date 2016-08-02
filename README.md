@@ -24,7 +24,7 @@ Metasploit Module: [exploit/linux/http/ipfire_proxy_exec](https://www.rapid7.com
 Metasploit Module: [exploit/linux/http/op5_config_exec](https://www.rapid7.com/db/modules/exploit/linux/http/op5_config_exec)
 
 ## centreon-2.5.3.tar.gz
-Metasploit Module: []()
+Metasploit Module: [exploit/linux/http/centreon_useralias_exec](https://www.rapid7.com/db/modules/exploit/linux/http/centreon_useralias_exec)
 
 ## tiki-14.1.tar.gz
 Metasploit Module: [exploit/linux/http/tiki_calendar_exec](https://www.rapid7/db/modules/exploit/linux/http/tiki_calendar_exec)
