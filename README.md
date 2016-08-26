@@ -33,7 +33,7 @@ Metasploit Module: [exploit/linux/http/tiki_calendar_exec](https://www.rapid7/db
 Metasploit Module: [auxiliary/admin/http/netgear_soap_password_extractor](https://www.rapid7.com/db/modules/auxiliary/admin/http/netgear_soap_password_extractor)
 
 ## netis_backdoor.py
-Metasploit Module: []()
+Metasploit Module: [exploit/linux/misc/netcore_udp_53413_backdoor](https://www.rapid7.com/db/modules/exploit/linux/misc/netcore_udp_53413_backdoor)
 
 ## NetBSD-7.0.1-amd64.iso
 Metasploit Module: []()
