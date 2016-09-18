@@ -36,4 +36,7 @@ Metasploit Module: [auxiliary/admin/http/netgear_soap_password_extractor](https:
 Metasploit Module: [exploit/linux/misc/netcore_udp_53413_backdoor](https://www.rapid7.com/db/modules/exploit/linux/misc/netcore_udp_53413_backdoor)
 
 ## NetBSD-7.0.1-amd64.iso
+Metasploit Module: [exploit/unix/local/netbsd_mail_local](https://www.rapid7.com/db/modules/exploit/unix/local/netbsd_mail_local)
+
+## coloradoftp-prime-8.zip
 Metasploit Module: []()
