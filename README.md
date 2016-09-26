@@ -40,3 +40,7 @@ Metasploit Module: [exploit/unix/local/netbsd_mail_local](https://www.rapid7.com
 
 ## coloradoftp-prime-8.zip
 Metasploit Module: []()
+
+## Panda_AV_Pro2016_16.1.2.exe
+Metasploit Module: []()
+
