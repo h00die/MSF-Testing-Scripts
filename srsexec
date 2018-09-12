@@ -1,0 +1,54 @@
+#!/usr/bin/python
+
+'''
+Install Instructions:
+
+This should be run out of the /opt/SUNWsrspx/bin/ folder
+
+You'll want to set this file's permissions as such:
+  chown root:sys /opt/SUNWsrspx/bin/srsexec
+  chmod 555 srsexec
+  chmod u+s srsexec
+
+ Solaris 10u9 doesn't have argparse, you needto transfer it manually (from pypi.org) and install it to /usr/lib/python2.4/site-packages/
+'''
+
+# See https://www.securityfocus.com/archive/1/468235
+
+import argparse
+import sys
+import os
+import stat
+
+parser = argparse.ArgumentParser(description='This is a CVE-2007-2617 srsexec emulator')
+parser.add_argument('-dvb', nargs=1, type=argparse.FileType('r'), default=sys.stdin, help='File to read in')
+parser.add_argument('foobar', nargs=1, help='String, unsure what its purpose is')
+
+args = parser.parse_args()
+
+# Create the uninstall files... while this isn't in the real binary, it'll make sure it seems installed correctly for
+# our exploitation purposes.  See download.oracle.com/sunalerts/1000443.1.html
+EMULATED_VERSION = '003.002.004' #'003.002.003' is also vuln, '003.002.005' is not.
+# sol10u9 has py 2.4 installed, so no with statement
+try:
+  f = open('/opt/SUNWsrspx/bin/UninstallNetConnect.%s.sh' %(EMULATED_VERSION), 'a')
+  f.close()
+except IOError:
+  pass #fail silent
+
+firstline = args.dvb[0].readline()
+if firstline.endswith('\n'):
+  firstline = firstline[:-1]
+args.foobar = args.foobar[0]
+
+print('''verify_binary(%s)
+srsexec: binary_name: %s''' %(args.foobar, args.foobar))
+print('srsexec: name_buf: %s' %((args.foobar + '_'*20)[0:20] )) #this line is 20 characters long with the foobar string in the beginning and ending with underscores
+i=0
+while i<=len(firstline):
+  print('binaries file line: %s' %(firstline[i:i+20]))
+  i+=18 # looks like we have a 2 character repeat on the next line kind of thing
+
+print('smmsp:NP')
+print('Security verification failed for binary: %s' %(args.foobar))
+print('see SYSLOG(/var/adm/messages) for errors')
