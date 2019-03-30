@@ -17,7 +17,7 @@
 
 | Hash              | JtR john --list=formats |  hashcathashcat -h |
 |-------------------|-------------------------|--------------------|
-| des               | descrypt                | 14000              |
+| des               | descrypt                | 1500               |
 | md5 (crypt is $1$)| md5crypt                | 500                |
 | sha1              |                         | 100                |
 | bsdi              | bsdicrypt               | 12400              |
